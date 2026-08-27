@@ -1,31 +1,41 @@
 @startuml
-title Modelo Entidad-Relación - [Nombre del Sistema]
+title Modelo Entidad-Relación - Gestor de Filas Fertya
 
-' --- Entidades ---
-entity Entidad1 {
-  * id_entidad1 : integer <<PK>>
+entity Turno {
+  * id_turno : string <<PK>>
   --
-  atributo1 : varchar
-  atributo2 : varchar
+  dni : string
+  motivoCodigo : string
+  codigoVisible : string
+  token : string
+  estado : string
+  createdAt : timestamp
+  horaIngreso : timestamp
+  horaLlamado : timestamp
+  llamadoPor : string
+  tokenConsumed : boolean
+  tokenCreatedAt : timestamp
+  tokenConsumedAt : timestamp
+  tokenConsumedBy : string
+  id_categoria : string <<FK>>
 }
 
-entity Entidad2 {
-  * id_entidad2 : integer <<PK>>
+entity Categoria {
+  * id_categoria : string <<PK>>
   --
-  atributo1 : varchar
-  id_entidad1 : integer <<FK>>
+  seq : integer
 }
 
-entity Entidad3 {
-  * id_entidad3 : integer <<PK>>
+entity Llamada {
+  * id_llamada : string <<PK>>
   --
-  atributo1 : varchar
-  id_entidad1 : integer <<FK>>
+  id_turno : string <<FK>>
+  by : string
+  at : timestamp
 }
 
 ' --- Relaciones ---
-' Sintaxis: EntidadA [cardinalidad] -- [cardinalidad] EntidadB : "etiqueta"
-Entidad1 ||--o{ Entidad2 : "relación"
-Entidad1 ||--o{ Entidad3 : "relación"
+Categoria ||--o{ Turno : "clasifica"
+Turno ||--o{ Llamada : "historial de llamados"
 
 @enduml

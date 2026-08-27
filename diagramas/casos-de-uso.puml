@@ -1,26 +1,35 @@
 @startuml
-title Diagrama de Casos de Uso - [Nombre del Sistema]
+title Diagrama de Casos de Uso - Gestor de Filas Fertya
 
 left to right direction
 
 ' --- Actores ---
-actor "[Actor principal]" as A1
-actor "[Actor secundario]" as A2
+actor "Paciente" as A1
+actor "Recepcionista" as A2
 
 ' --- Sistema ---
-rectangle "[Nombre del Sistema]" {
-  usecase "[Caso de uso 1]" as UC1
-  usecase "[Caso de uso 2]" as UC2
-  usecase "[Caso de uso 3]" as UC3
+rectangle "Gestor de Filas Fertya" {
+  usecase "Autogestionar turno" as UC1
+  usecase "Consultar seguimiento de turno" as UC2
+  usecase "Llamar turno" as UC3
+  usecase "Devolver turno" as UC4
+  usecase "Finalizar turno" as UC5
+  usecase "Cerrar jornada" as UC6
+  usecase "Exportar turnos del día (CSV)" as UC7
+  usecase "Ver pantalla de sala de espera" as UC8
 }
 
 ' --- Relaciones actor-caso de uso ---
 A1 --> UC1
 A1 --> UC2
+A1 --> UC8
 A2 --> UC3
+A2 --> UC4
+A2 --> UC5
+A2 --> UC6
+A2 --> UC7
 
 ' --- Relaciones entre casos de uso ---
-' UC2 .> UC1 : <<include>>
-' UC3 .> UC1 : <<extend>>
+' UC6 .> UC5 : <<include>>
 
 @enduml
