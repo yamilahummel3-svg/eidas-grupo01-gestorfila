@@ -4,7 +4,7 @@ _Antes de que una historia entre a desarrollo, tiene que pasar un filtro: el Def
 Ready. Es un acuerdo del equipo sobre qué condiciones mínimas debe cumplir una historia para
 considerarse "lista para trabajar". Si no las cumple, vuelve a refinamiento._
 
-> **Nota del borrador:** esta checklist es un punto de partida propuesto para que el Grupo 1 la discuta y ajuste — es un acuerdo de equipo, así que conviene revisarla entre Yamila y Facundo antes de darla por definitiva.
+
 
 ---
 
