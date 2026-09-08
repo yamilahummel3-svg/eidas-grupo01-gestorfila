@@ -69,6 +69,7 @@ No se identificaron relaciones `include`/`extend` entre los casos de uso relevad
 | # | Situación | Respuesta del sistema |
 |---|-----------|-----------------------|
 | E1 | El recepcionista llama por error a un turno equivocado. | Puede usar la acción "Devolver" para volver el turno a estado "en-fila". |
+| E2 | Dos recepcionistas (ej. Planta Baja y 4º piso) llaman casi simultáneamente el mismo turno. | Prevalece la última escritura en Firestore; el operador cuya acción fue sobrescrita no recibe aviso. Limitación conocida (ver RNF-06), no resuelta en la versión actual. |
 
 | Campo | Detalle |
 |-------|---------|
