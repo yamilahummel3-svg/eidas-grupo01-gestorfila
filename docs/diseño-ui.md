@@ -6,7 +6,7 @@ _Los wireframes en imagen o PDF van en `diagramas/wireframes/`; acá se document
 > Los wireframes son de baja fidelidad (cajas y etiquetas), redibujados a partir de las pantallas reales del sistema desplegado en `https://gestor-fila.web.app`. Cada uno tiene su fuente PlantUML (`.puml`) y su imagen (`.png`). Todos los datos que aparecen (códigos, DNI, horarios) son de ejemplo, no de pacientes reales.
 
 ---
-.
+
 ## Pantalla 1 — Autorecepción (`autorecepcion.html`)
 
 **Wireframe:** `diagramas/wireframes/autorecepcion.png` (estado A: formulario; estado B: turno generado)
