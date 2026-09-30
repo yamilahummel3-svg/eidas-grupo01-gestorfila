@@ -1,0 +1,33 @@
+@startsalt
+' Wireframe — Pantalla 4: Seguimiento (seguimiento.html)
+' Pensada para el celular del paciente. Datos de ejemplo.
+{
+  { <b>Estado A — En fila
+    {+
+      .  | <b>[ LOGO FERTYA ]
+      Turno confirmado: <b>C-002
+      Estás en fila. Esperá a ser llamado.
+      [ ] Reproducir sonido al ser llamado
+    }
+  }
+  .
+  { <b>Estado B — Llamado
+    {+
+      .  | <b>[ LOGO FERTYA ]
+      {+
+        <size:22><b>C-002
+        Te están llamando desde <b>Recepción 2
+      }
+      Tu turno está siendo llamado por Recepción 2 a las 08:15.
+      [X] Reproducir sonido al ser llamado
+    }
+  }
+  .
+  { <b>Estado C — Error
+    {+
+      .  | <b>[ LOGO FERTYA ]
+      Código inválido o no encontrado.
+    }
+  }
+}
+@endsalt

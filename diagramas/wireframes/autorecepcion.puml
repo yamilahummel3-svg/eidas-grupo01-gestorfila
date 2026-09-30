@@ -1,0 +1,42 @@
+@startsalt
+' Wireframe — Pantalla 1: Autorecepción (autorecepcion.html)
+' Datos de ejemplo, no reales.
+{
+  {+
+    .                  | <b>[ LOGO FERTYA ]
+    .                  | <size:18><b>Autogestión de Fila
+    .                  | Registro confidencial de llegada
+  }
+  .
+  { <b>Estado A — Formulario
+    {+
+      <b>Ingresá tus datos
+      DNI
+      "Ej: 12345678                         "
+      <size:10>Solo números, sin puntos.
+      .
+      Motivo de la visita
+      ^Seleccioná una opción              ^
+      .
+      [          Registrar llegada          ]
+      <color:red>(si falla) Ingresá un DNI válido (7–8 dígitos).
+    }
+  }
+  .
+  { <b>Estado B — Turno generado
+    {+
+      <b>Te registramos correctamente.
+      Tu código para la pantalla es: <size:20><b><color:blue>C-001
+      .
+      {+
+        .
+        [   CÓDIGO QR   ]
+        (link de seguimiento)
+        .
+      }
+      Escaneá el código para seguir tu turno desde el celular.
+      Por privacidad, no mostramos nombres. Solo verás tu código en la sala de espera.
+    }
+  }
+}
+@endsalt

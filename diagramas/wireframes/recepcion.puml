@@ -1,0 +1,25 @@
+@startsalt
+' Wireframe — Pantalla 2: Panel de Recepción (recepcion.html)
+' Datos de ejemplo, no reales.
+{
+  {
+    [ LOGO ] | <b>Panel de recepción | . | Recepción: | ^Recepción 1^ | [Exportar día (CSV)] | [Cerrar jornada / Limpiar panel]
+    .        | <size:10>Gestión de sala de espera
+  }
+  .
+  {#
+    <b>Código | <b>DNI | <b>Motivo | <b>Hora ingreso | <b>Hora llamado | <b>Llamado por | <b>Estado | <b>Acciones
+    C-001 | 11111111 | Consultas | 08:02 | 08:05 | Recepción 2 | finalizado | .
+    L-001 | 22222222 | Laboratorio | 08:04 | 08:10 | Recepción 1 | llamado | {[Devolver] | [Finalizar]}
+    E-001 | 33333333 | Espermograma | 08:07 | . | . | en-fila | [Llamar]
+    C-002 | 44444444 | Consultas | 08:09 | . | . | en-fila | [Llamar]
+  }
+  .
+  { <b>Confirmación al presionar "Finalizar" (ventana modal)
+    {+
+      ¿Deseas finalizar este turno? Esta acción marcará el turno como finalizado.
+      { . | [Aceptar] | [Cancelar] }
+    }
+  }
+}
+@endsalt

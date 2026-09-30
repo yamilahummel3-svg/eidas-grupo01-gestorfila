@@ -1,0 +1,20 @@
+@startsalt
+' Wireframe — Pantalla 3: Sala de espera (pantalla.html)
+' Se muestra en un monitor, a distancia. Datos de ejemplo.
+{
+  {
+    .   | <b>[ LOGO FERTYA ]
+    .   | <size:18><b>Pantalla de Turnos
+    .   | Sala de espera
+  }
+  .
+  {#
+    <size:22><b>L-001                                        | Laboratorio
+    Llamado por: Recepción 1 a las 08:10 (tarjeta resaltada) | <b>[ LLAMANDO ]
+    <size:22><b>E-001                                        | Espermograma
+    En fila                                                  | .
+    <size:22><b>C-002                                        | Consultas
+    En fila                                                  | .
+  }
+}
+@endsalt
