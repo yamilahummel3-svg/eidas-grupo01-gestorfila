@@ -58,9 +58,9 @@ Gestor de Filas Fertya es un sistema web para la gestión digital de la fila de 
 
 | ID | Requisito |
 |----|-----------|
-| RNF-03 | El sistema no debe mostrar nombres de pacientes en ninguna pantalla pública; en la sala de espera y en el seguimiento solo se muestra el código visible. El acceso a Firestore se realiza mediante autenticación anónima y debe acotarse con reglas de seguridad. **Limitaciones conocidas de la versión actual:** (a) el panel de recepción no requiere inicio de sesión: cualquiera con la URL puede operar turnos y ver los DNI; (b) la pantalla de sala de espera lee la colección de turnos sin autenticarse, lo que indica que las reglas permiten leer los turnos (incluido el DNI) sin sesión. Al almacenarse datos personales de pacientes en la nube, queda pendiente confirmar con el área de sistemas/legal de Grupo Oroño el cumplimiento de la Ley 25.326 de Protección de Datos Personales antes de una puesta en producción total. |
-| RNF-05 | El token de seguimiento debe ser un UUID generado aleatoriamente (122 bits aleatorios), de modo que no pueda adivinarse ni deducirse a partir del código visible. **Limitación conocida:** el enlace no expira ni se bloquea después del primer uso; si se comparte, otra persona puede ver el estado de ese turno (solo código y estado, sin datos personales). Mejora propuesta: invalidar el enlace al finalizar el turno. |
-| RNF-06 | El sistema puede presentar condiciones de carrera cuando dos operadores de recepción (por ejemplo, de Planta Baja y del 4º piso) intentan llamar el mismo turno de forma casi simultánea; en ese caso, prevalece la última escritura en Firestore, sin aviso al operador cuya acción fue sobrescrita. Se documenta como limitación conocida, no resuelta en la versión actual del sistema. |
+| RNF-03 | El sistema no debe mostrar nombres de pacientes en ninguna pantalla pública; en la sala de espera y en el seguimiento solo se muestra el código visible. Solo el personal de recepción debe poder ver el DNI y operar turnos, y la lectura de la colección de turnos debe requerir autenticación (reglas de seguridad de Firestore). Antes de una puesta en producción total, el área de sistemas/legal de Grupo Oroño debe confirmar el cumplimiento de la Ley 25.326 de Protección de Datos Personales. _(Hoy se cumple solo la primera parte: ver LIM-03 y LIM-04.)_ |
+| RNF-05 | El token de seguimiento debe ser un UUID generado aleatoriamente (122 bits aleatorios), de modo que no pueda adivinarse ni deducirse a partir del código visible, y el enlace debe dejar de mostrar información una vez finalizado el turno. _(Hoy se cumple solo la primera parte: ver LIM-05.)_ |
+| RNF-06 | Si dos operadores de recepción (por ejemplo, de Planta Baja y del 4º piso) intentan llamar el mismo turno casi al mismo tiempo, el sistema debe registrar solo el primer llamado y avisar al segundo operador que ese turno ya fue llamado. _(Hoy no se cumple: ver LIM-01.)_ |
 
 ### Usabilidad y accesibilidad
 
@@ -73,4 +73,16 @@ Gestor de Filas Fertya es un sistema web para la gestión digital de la fila de 
 
 | ID | Requisito |
 |----|-----------|
-| RNF-07 | El reinicio mensual del contador depende de una acción manual del equipo de desarrollo. Mientras tanto, los códigos crecen a lo largo del mes: con más de 70 pacientes por día, la categoría Consultas supera los 4 dígitos (ej. `C-2400`), lo que los hace menos legibles en la pantalla de sala de espera. Si el reinicio se omite, los códigos siguen creciendo; si se hace con la jornada en curso, puede repetir códigos el mismo día. Mejora propuesta: reinicio automático diario al ejecutar "Cerrar jornada". |
+| RNF-07 | Dentro de una misma jornada, el código visible de un turno no debe repetirse en ninguna categoría, y debe tener como máximo 3 dígitos (hasta `X-999`) para leerse con facilidad en la pantalla de sala. _(Hoy se cumple la primera parte; la segunda no: ver LIM-02.)_ |
+
+## Limitaciones conocidas de la versión actual
+
+_Comportamientos del sistema desplegado que no cumplen un requisito. Se documentan aparte porque no son requisitos: describen cómo funciona hoy el sistema, no cómo debe funcionar._
+
+| ID | Limitación | Requisito afectado | Mejora propuesta |
+|----|-----------|--------------------|------------------|
+| LIM-01 | Si dos operadores llaman el mismo turno casi al mismo tiempo, prevalece la última escritura en Firestore: `llamadoPor` y `horaLlamado` muestran solo el último llamado y el operador cuya acción fue sobrescrita no recibe aviso. | RNF-06 | Verificar el estado del turno dentro de la transacción del llamado y rechazar el segundo llamado con un aviso. |
+| LIM-02 | El contador de códigos no se reinicia automáticamente: el equipo de desarrollo lo reinicia en forma manual una vez por mes. Mientras tanto, los códigos crecen a lo largo del mes: con más de 70 pacientes por día, la categoría Consultas supera los 4 dígitos (ej. `C-2400`). Si el reinicio se omite, siguen creciendo; si se hace con la jornada en curso, puede repetir códigos el mismo día. | RNF-07, RF-03 | Reinicio automático diario al ejecutar "Cerrar jornada". |
+| LIM-03 | El panel de recepción no requiere inicio de sesión: cualquiera con la URL puede operar turnos y ver los DNI. El puesto que llama (Recepción 1 a 4) lo elige el propio operador, por lo que no hay trazabilidad por persona. | RNF-03 | Inicio de sesión para el personal de recepción. |
+| LIM-04 | La pantalla de sala de espera lee la colección de turnos sin autenticarse, lo que indica que las reglas de Firestore permiten leer los turnos (incluido el DNI) sin sesión. | RNF-03 | Reglas de Firestore que exijan autenticación, y que la pantalla de sala lea solo código, motivo y estado. |
+| LIM-05 | El enlace de seguimiento no expira ni se bloquea, ni siquiera después de finalizado el turno. Si se comparte, otra persona puede ver el código y el estado de ese turno (sin datos personales). | RNF-05 | Invalidar el enlace al finalizar el turno. |
