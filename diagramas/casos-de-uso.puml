@@ -6,17 +6,20 @@ left to right direction
 ' --- Actores ---
 actor "Paciente" as A1
 actor "Recepcionista" as A2
+actor "Firebase / Firestore\n<<sistema externo>>" as S1
 
 ' --- Sistema ---
 rectangle "Gestor de Filas Fertya" {
   usecase "Autogestionar turno" as UC1
-  usecase "Consultar seguimiento de turno" as UC2
+  usecase "Generar código visible\ny token" as UC1a
+  usecase "Consultar seguimiento\nde turno" as UC2
+  usecase "Notificar llamado\ncon sonido" as UC2a
+  usecase "Ver pantalla de\nsala de espera" as UC8
   usecase "Llamar turno" as UC3
   usecase "Devolver turno" as UC4
   usecase "Finalizar turno" as UC5
   usecase "Cerrar jornada" as UC6
-  usecase "Exportar turnos del día (CSV)" as UC7
-  usecase "Ver pantalla de sala de espera" as UC8
+  usecase "Exportar turnos\ndel día (CSV)" as UC7
 }
 
 ' --- Relaciones actor-caso de uso ---
@@ -29,7 +32,20 @@ A2 --> UC5
 A2 --> UC6
 A2 --> UC7
 
+' --- Sistema externo (actor secundario) ---
+UC1a --> S1
+UC2 --> S1
+UC3 --> S1
+UC6 --> S1
+
 ' --- Relaciones entre casos de uso ---
-' UC6 .> UC5 : <<include>>
+' include: siempre ocurre (RF-02, RF-03)
+UC1 ..> UC1a : <<include>>
+' No hay include entre "Cerrar jornada" y "Finalizar turno": cerrar jornada finaliza turnos "en-fila",
+' y "Finalizar turno" opera sobre un turno "llamado" (ver justificación en docs/casos-de-uso.md)
+' extend: solo ocurre si el paciente habilitó el sonido y el turno pasa a "llamado" (RF-15)
+UC2a ..> UC2 : <<extend>>
+' extend: solo ocurre si el recepcionista llamó por error o el paciente no se presentó (RF-07)
+UC4 ..> UC3 : <<extend>>
 
 @enduml
