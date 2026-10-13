@@ -7,7 +7,7 @@ Incluido en `diagramas/casos-de-uso.puml`. Visualizar en [plantuml.com](https://
 **Actores identificados:**
 - **Paciente** (actor principal): genera su turno en `autorecepcion.html`, lo sigue desde el celular en `seguimiento.html` y mira la pantalla de sala de espera (`pantalla.html`).
 - **Recepcionista** (actor principal): opera `recepcion.html` desde Planta Baja o el 4º piso (Recepción 1 a 4) para llamar, devolver y finalizar turnos, cerrar la jornada y exportar el reporte.
-- **Firebase / Firestore** (actor secundario, sistema externo): guarda los turnos y los contadores, y avisa en tiempo real los cambios a todas las pantallas (RNF-01). Participa en todos los casos que leen o escriben turnos.
+- **Firebase / Firestore** (actor secundario, sistema externo): guarda los turnos y los contadores, y avisa en tiempo real los cambios a todas las pantallas (RNF-01). Participa en todos los casos de uso que leen o escriben turnos: generar código y token, consultar seguimiento, ver pantalla de sala, llamar, devolver y finalizar turno, cerrar jornada y exportar el CSV. Se modela como actor porque es un servicio de terceros (Google) que, además de guardar los datos, notifica por su cuenta los cambios a todas las pantallas.
 
 **Relaciones entre casos de uso:**
 
@@ -15,9 +15,10 @@ Incluido en `diagramas/casos-de-uso.puml`. Visualizar en [plantuml.com](https://
 |----------|------|---------------|
 | Autogestionar turno → Generar código visible y token | `include` | Siempre ocurre: no existe un turno sin código visible ni token de seguimiento (RF-02, RF-03). Se separa porque es la parte que incrementa el contador atómico por categoría. |
 | Notificar llamado con sonido → Consultar seguimiento | `extend` | Solo ocurre bajo condición: el paciente habilitó el sonido y su turno pasa a "llamado" (RF-15). Sin sonido, el seguimiento funciona igual. |
-| Devolver turno → Llamar turno | `extend` | Solo ocurre si el recepcionista llamó un turno por error o el paciente no se presentó (RF-07). No es parte del flujo normal del llamado. |
 
 **Relación que se evaluó y se descartó:** "Cerrar jornada" `include` "Finalizar turno". Aunque las dos dejan turnos en estado "finalizado", no operan sobre lo mismo: cerrar jornada finaliza en bloque los turnos **"en-fila"** que nadie atendió, mientras que "Finalizar turno" opera sobre un turno **"llamado"**, de a uno y con confirmación propia. Un `include` diría que cerrar la jornada ejecuta "Finalizar turno", y no es así.
+
+**Otra relación descartada:** "Devolver turno" `extend` "Llamar turno". Un `extend` se dispara dentro del flujo del caso base, en un punto de extensión, pero devolver ocurre después, cuando el llamado ya terminó (el turno quedó "llamado" y el recepcionista se da cuenta del error o de que el paciente no vino). Por eso "Devolver turno" se modela como un caso de uso independiente del recepcionista, igual que "Finalizar turno".
 
 ---
 
@@ -94,7 +95,7 @@ Incluido en `diagramas/casos-de-uso.puml`. Visualizar en [plantuml.com](https://
 
 **Flujos alternativos (decisiones del recepcionista, no fallas del sistema):**
 
-- **Llamó el turno equivocado** (después del paso 2): usa "Devolver turno", que extiende este caso de uso. El turno vuelve a "en-fila" sin perder su lugar por hora de ingreso (RF-07).
+- **Llamó el turno equivocado** (después del paso 2): usa el caso de uso "Devolver turno", independiente de este. El turno vuelve a "en-fila" sin perder su lugar por hora de ingreso (RF-07).
 - **El paciente llamado no se presenta al mostrador:** el recepcionista lo devuelve a la fila para llamarlo más tarde o finaliza el turno.
 
 > **Nota técnica a verificar:** el código arma el historial (`llamadas`) con una marca de hora del servidor dentro de un arreglo, algo que Firestore no admite. Si es así, la transacción falla siempre y E2 es en realidad el camino habitual: el historial de llamados no se está guardando. Verificarlo en la consola de Firestore mirando si los turnos llamados tienen el campo `llamadas`.

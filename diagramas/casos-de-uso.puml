@@ -33,10 +33,15 @@ A2 --> UC6
 A2 --> UC7
 
 ' --- Sistema externo (actor secundario) ---
+' Participa en todos los casos de uso que leen o escriben turnos
 UC1a --> S1
 UC2 --> S1
+UC8 --> S1
 UC3 --> S1
+UC4 --> S1
+UC5 --> S1
 UC6 --> S1
+UC7 --> S1
 
 ' --- Relaciones entre casos de uso ---
 ' include: siempre ocurre (RF-02, RF-03)
@@ -45,7 +50,7 @@ UC1 ..> UC1a : <<include>>
 ' y "Finalizar turno" opera sobre un turno "llamado" (ver justificación en docs/casos-de-uso.md)
 ' extend: solo ocurre si el paciente habilitó el sonido y el turno pasa a "llamado" (RF-15)
 UC2a ..> UC2 : <<extend>>
-' extend: solo ocurre si el recepcionista llamó por error o el paciente no se presentó (RF-07)
-UC4 ..> UC3 : <<extend>>
+' "Devolver turno" es un caso de uso independiente del recepcionista (no extend de "Llamar turno"):
+' ocurre después de que el llamado terminó, no dentro de su flujo
 
 @enduml
