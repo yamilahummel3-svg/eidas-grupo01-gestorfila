@@ -45,7 +45,9 @@ _Cada historia debe incluir formato clásico, criterios de aceptación y validac
 
 1. Dado que hay turnos en estado "en-fila", cuando el recepcionista presiona "Llamar" sobre uno de ellos, entonces el turno cambia a "llamado" y se registran `horaLlamado` y `llamadoPor` (el puesto elegido, Recepción 1 a 4).
 2. Dado que el turno pasó a "llamado", cuando se consulta la pantalla de sala de espera, entonces la tarjeta aparece resaltada con "LLAMANDO" en menos de 2 segundos (RNF-01).
-3. Dado que dos recepcionistas llaman casi simultáneamente el mismo turno, cuando ambas acciones se procesan, entonces prevalece la última escritura en Firestore, sin aviso al operador cuya acción fue sobrescrita (limitación conocida LIM-01; incumple RNF-06).
+3. Dado que dos recepcionistas llaman casi simultáneamente el mismo turno, cuando ambas acciones se procesan, entonces el sistema registra solo el primer llamado y el segundo recepcionista recibe un aviso de que ese turno ya fue llamado (RNF-06).
+
+> Este criterio todavía no se cumple en la versión actual (ver LIM-01): la historia queda abierta hasta resolverlo.
 
 ### Validación INVEST
 

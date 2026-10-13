@@ -8,11 +8,11 @@ entity Turno {
   motivoCodigo : string
   codigoVisible : string
   token : string
-  estado : string
-  createdAt : timestamp
+  estado : enum (en-fila, llamado, finalizado)
   horaIngreso : timestamp
   horaLlamado : timestamp
   llamadoPor : string
+  horaFinalizado : timestamp
   tokenConsumed : boolean
   tokenCreatedAt : timestamp
   tokenConsumedAt : timestamp
