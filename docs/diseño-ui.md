@@ -1,8 +1,5 @@
 # Diseño UI
 
-_Presentar al menos un wireframe por pantalla o módulo relevante._
-_Los wireframes en imagen o PDF van en `diagramas/wireframes/`; acá se documenta la justificación de cada uno._
-
 > Los wireframes son de baja fidelidad (cajas y etiquetas), redibujados a partir de las pantallas reales del sistema desplegado en `https://gestor-fila.web.app`. Cada uno tiene su fuente PlantUML (`.puml`) y su imagen (`.png`). Todos los datos que aparecen (códigos, DNI, horarios) son de ejemplo, no de pacientes reales.
 
 ---

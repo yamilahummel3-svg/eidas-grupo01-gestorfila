@@ -90,7 +90,7 @@ Incluido en `diagramas/casos-de-uso.puml`. Visualizar en [plantuml.com](https://
 | # | Situación | Respuesta del sistema |
 |---|-----------|-----------------------|
 | E1 | Recepción PB y Recepción 4º piso llaman el mismo turno casi al mismo tiempo. | Prevalece la última escritura: `llamadoPor` y `horaLlamado` muestran solo el último llamado y el operador que llamó primero no recibe aviso (limitación conocida LIM-01; incumple RNF-06). |
-| E2 | La transacción del llamado falla (paso 2). | El sistema reintenta con una actualización simple: el turno queda "llamado" con hora y puesto, pero **ese llamado no se agrega al historial** (ver nota). |
+| E2 | La transacción del llamado falla (paso 2). | El sistema reintenta con una actualización simple: el turno queda "llamado" con hora y puesto, pero **ese llamado no se agrega al historial** (ver hallazgo abajo). |
 | E3 | Entre que el panel muestra el turno "en-fila" y el recepcionista presiona "Llamar", otro puesto lo finalizó (paso 2). | El sistema no verifica el estado actual antes de llamar: el turno finalizado vuelve a quedar "llamado" y reaparece en la pantalla de sala. El recepcionista debe finalizarlo de nuevo. Mejora propuesta: verificar el estado dentro de la transacción (la misma que resolvería LIM-01). |
 
 **Flujos alternativos (decisiones del recepcionista, no fallas del sistema):**
@@ -98,7 +98,7 @@ Incluido en `diagramas/casos-de-uso.puml`. Visualizar en [plantuml.com](https://
 - **Llamó el turno equivocado** (después del paso 2): usa el caso de uso "Devolver turno", independiente de este. El turno vuelve a "en-fila" sin perder su lugar por hora de ingreso (RF-07).
 - **El paciente llamado no se presenta al mostrador:** el recepcionista lo devuelve a la fila para llamarlo más tarde o finaliza el turno.
 
-> **Nota técnica a verificar:** el código arma el historial (`llamadas`) con una marca de hora del servidor dentro de un arreglo, algo que Firestore no admite. Si es así, la transacción falla siempre y E2 es en realidad el camino habitual: el historial de llamados no se está guardando. Verificarlo en la consola de Firestore mirando si los turnos llamados tienen el campo `llamadas`.
+> **Hallazgo del análisis del código (no confirmado en la base):** el código arma el historial (`llamadas`) con una marca de hora del servidor dentro de un arreglo, algo que Firestore no admite. Si es así, la transacción falla siempre y E2 es en realidad el camino habitual: el historial de llamados no se estaría guardando. No pudo confirmarse en la consola de Firestore antes de la entrega.
 
 | Campo | Detalle |
 |-------|---------|
@@ -142,7 +142,7 @@ Incluido en `diagramas/casos-de-uso.puml`. Visualizar en [plantuml.com](https://
 | E4 | El paciente reabre el enlace o lo comparte con un acompañante. | El seguimiento **sigue funcionando**: el token se marca como consumido solo la primera vez, pero no se bloquea (RF-14). Quien tenga el enlace ve el código y el estado del turno, sin datos personales (limitación conocida LIM-05). |
 | E5 | El navegador del celular bloquea el audio. | No suena, pero el banner visual de llamado se muestra igual (paso 5). |
 
-> **Nota de coherencia:** al consumirse el token, el turno deja de mostrarse en la pantalla de sala mientras está "en-fila" (vuelve a verse cuando lo llaman). Es decir, quien escanea el QR sigue su turno desde el celular y no en la pantalla. Este comportamiento está documentado en RF-11.
+> **Comportamiento relacionado:** al consumirse el token, el turno deja de mostrarse en la pantalla de sala mientras está "en-fila" (vuelve a verse cuando lo llaman). Es decir, quien escanea el QR sigue su turno desde el celular y no en la pantalla. Este comportamiento está documentado en RF-11.
 
 | Campo | Detalle |
 |-------|---------|

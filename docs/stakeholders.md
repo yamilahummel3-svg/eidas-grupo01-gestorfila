@@ -1,8 +1,5 @@
 # Stakeholders
 
-_Identificar y justificar las partes interesadas relevantes para el sistema._
-_Para cada una: describir su rol y por qué es clave para el proyecto._
-
 > Relevado mediante 3 entrevistas presenciales realizadas en Fertya entre noviembre de 2025 y febrero de 2026 (ver documentación de la Práctica Profesionalizante II del grupo, carpeta 02).
 
 ---

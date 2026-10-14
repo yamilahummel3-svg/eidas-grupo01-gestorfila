@@ -34,7 +34,7 @@ Los datos de los turnos se almacenan en Firestore (colección `turnos\_fertya`),
 |-|-|-|-|
 |EP-01|Presentación preliminar (Stakeholders + Requisitos)|19/08/2026|Entregada|
 |EP-02 (Entrega intermedia)|Requisitos + Historias de Usuario + Casos de Uso completos, con revisión en vivo|16/09/2026|Entregada|
-|Final|Presentación final grupal (Parcial, Parte A)|13/10/2026|En curso — repo completo, en revisión final|
+|Final|Entrega final del repositorio (Parcial, Parte A)|13/10/2026|Entregada|
 
 ### Cronograma detallado de trabajo
 
@@ -50,7 +50,7 @@ Los datos de los turnos se almacenan en Firestore (colección `turnos\_fertya`),
 |Mié 30/09|Consulta general y repaso|
 |Mar 06/10|Consulta final del repo + repaso para el cuestionario individual|
 |Mié 07/10|Últimos ajustes: README, integrantes.md, estructura del repo completa|
-|Mar 13/10|**PRESENTACIÓN FINAL GRUPAL** (Parcial, Parte A)|
+|Mar 13/10|**ENTREGA FINAL DEL REPOSITORIO** (Parcial, Parte A)|
 |Mié 14/10|Cierre del cuatrimestre + repaso para el Cuestionario individual|
 
 ## Devoluciones atendidas
@@ -107,11 +107,3 @@ Cambios hechos a partir de la devolución del 06/10/2026 ([`feedback/2026-10-06.
 │       └── seguimiento.puml / .png
 └── cuestionario/
 ```
-
-## Instrucciones operativas
-
-* Un integrante del grupo es responsable de subir los cambios al repositorio.
-* Completar `integrantes.md` antes de la primera entrega.
-* Mantener los archivos en la carpeta correspondiente según la estructura indicada.
-* Los diagramas deben entregarse en formato PlantUML (`.puml`). Se pueden visualizar en [plantuml.com](https://www.plantuml.com/plantuml/uml/).
-

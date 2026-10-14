@@ -51,7 +51,7 @@ Con `horaIngreso`, `horaLlamado` y `horaFinalizado` se pueden calcular las dos m
 
 En la implementación real, el historial de llamadas se guarda embebido como un arreglo dentro del propio documento de Turno (`llamadas: [{by, at}, ...]`), lo cual es eficiente en Firestore porque evita una consulta adicional. Para este modelo entidad-relación se decidió separarlo como entidad propia, porque conceptualmente representa un historial de eventos con cardinalidad variable (un turno puede ser llamado, devuelto y llamado de nuevo más de una vez), y modelarlo así deja más claro el ciclo de vida del turno de cara al análisis. Se evaluó dejarlo como un atributo simple (`ultimoLlamado`), pero se descartó porque se perdería el historial completo, que es necesario para trazabilidad.
 
-> **Pendiente de verificar:** el código arma el historial con una marca de hora del servidor dentro de un arreglo, algo que Firestore no admite. Si la escritura falla, la app guarda el llamado sin historial (CU-02, E2). Hay que confirmar en la consola de Firestore si los turnos llamados tienen el campo `llamadas`; si no lo tienen, esta entidad refleja el diseño buscado pero no el dato que hoy se guarda.
+> **Hallazgo no confirmado:** el código arma el historial con una marca de hora del servidor dentro de un arreglo, algo que Firestore no admite. Si la escritura falla, la app guarda el llamado sin historial (CU-02, E2). No pudo confirmarse en la consola de Firestore antes de la entrega; si se confirma, esta entidad refleja el diseño buscado pero no el dato que hoy se guarda.
 
 ### Decisión 2 — Contador atómico por categoría en vez de calcular el código al vuelo
 
